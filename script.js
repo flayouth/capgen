@@ -5,10 +5,14 @@ var holidaysEl = document.getElementById('ssBtn3')
 var themeEl = document.getElementById('ssBtn4')
 var outdoorsEl = document.getElementById('ssBtn5')
 var captionEl = document.getElementsByClassName('captionEl')[0]
-
+var textContainer = document.getElementById('textContainer')
+var refreshBtn = document.getElementById('refresh')
 
 function start() {
-    captionEl.innerHTML = 'Caption Generator'
+    captionEl.innerHTML = 'Choose Caption Category'
+    captionEl.style.fontFamily = 'Air Travelers'
+    captionEl.style.color = 'rgba(62, 182, 237, 0.582)'
+    captionEl.style.textShadow = '1px 1px 1px , 1px 5px 2px #363945'
 }
 
 start()
@@ -26,6 +30,7 @@ function hideBtn() {
     themeEl.setAttribute('style', 'display:none');
     outdoorsEl.setAttribute('style', 'display:none');
 
+    refreshBtn.remove('class')
 }
 
 var friendshipCaption = [ "Friends ‘till the end.", 
@@ -96,21 +101,34 @@ var vacationCaption = [
     "Trailblazin’ through the weekend",
   ]
 
+ localStorage.setItem('outdoorsCaption', [])
+ console.log(localStorage)
 
-
-function showCaption(captionArr) {
+  function showCaption(captionArr) {
     var newDisplay = newCaption(captionArr)
-    document.getElementById('paragraphEl').innerHTML = newDisplay
-    // captionEl.setAttribute('style', 'display:none')
-    captionEl.innerHTML = "Caption here"
+
+    var pEl =  document. createElement('p')
+    pEl.textContent = newDisplay
+
+
+    var refreshBtn = document.createElement('button');
+    refreshBtn.textContent = 'Refresh'
+    refreshBtn.setAttribute('class', 'ssBtn')
+    refreshBtn.style.margin = '0 auto'
+    refreshBtn.style.display = 'block'
+
+    captionEl.innerHTML = "Thinking of the right caption is hard, heres one on us  :"
     console.log(captionEl)
+
+    refreshBtn.addEventListener('click', function(){
+      window.location.href = 'index.html'
+    }) 
+
+    textContainer.append(pEl, refreshBtn)
 }
-
-
 
 document.querySelectorAll('.ssBtn').forEach(x=>x.addEventListener('click', hideBtn))
   
-
 
 friendshipEl.addEventListener('click', ()=>showCaption(friendshipCaption))
 vacationEl.addEventListener('click', ()=>showCaption(vacationCaption))
@@ -119,25 +137,15 @@ themeEl.addEventListener('click', ()=>showCaption(themeCaption))
 outdoorsEl.addEventListener('click', ()=>showCaption(outdoorsCaption))
 
 
-// document.getElementById('paragraphEl').innerHTML = ["fdsdsfsa", 'sdfdfg']
-
-
-
-
 function newCaption(captionArr) {
     
-
     var randomNumber = Math.floor(Math.random() * (captionArr.length));
     var randomCaption = captionArr[randomNumber]
     return randomCaption
 }
 
 
-
-
-
-// // hide div container
-// document.getElementById("situationBtn").setAttribute('style', 'display: none');
-// // display div container
-// document.getElementById("id-name").setAttribute('style', 'display: block');
-
+// fetch('https://serpapi.com//search?engine?q=google_trends&tbm=isch&ijn=0&api_key=6f145bea7dab7af91e5531e4a384e80f26ac3fc416ec69ca0d93348e359b0662')
+// .then(res=>{
+//     console.log(res)
+// })
